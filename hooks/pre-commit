@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Revenir au répertoire racine du dépôt
+cd "$(git rev-parse --show-toplevel)"
+
+# Question à l'utilisateur
+read -p "Sauvegarder les informations du commit (y/n) ? " yn < /dev/tty
+
+# Réponse de l'utilisateur
+case $yn in
+    [Yy]* )
+        # Créer le dossier suivi s'il n'existe pas
+        mkdir -p suivi
+
+        # Ajouter les informations dans le fichier commitInfo.txt
+        echo "commit vérifié $(date)" >> suivi/commitInfo.txt
+
+        # Ajouter le fichier au commit
+        git add suivi/commitInfo.txt
+
+        echo "Les informations du commit ont été sauvegardées."
+        ;;
+    [Nn]* )
+        echo "Aucune sauvegarde effectuée."
+        ;;
+    * )
+        echo "Entrée invalide. Pas de sauvegarde effectuée."
+        ;;
+esac
+
+exit 0
